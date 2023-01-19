@@ -1,0 +1,65 @@
+* {
+    font-family: "Work Sans", sans-serif;
+  }
+  
+  header {
+    text-align: left;
+    padding-bottom: 40px;
+    padding-right: 40px;
+    display: inline-block;
+    float: left;
+  }
+  
+  header div {
+    text-align: right;
+    float: left;
+    display: block;
+    font-size: 13px;
+    padding-left: 150px;
+  
+  }
+  
+  #header-wrap {
+    padding-top: 10px;
+    width: 95%;
+    margin: 0 auto;
+    align-content: center;
+  }
+
+  #wrapper {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .text-blurb {
+    display: inline-block;
+    float: left;
+    padding-top: 5px;
+    padding-left: 10px;
+    max-width: 690px;
+    min-height: 100px;
+    font-size: 13px;
+  }
+  
+  .text-blurb span {
+    font-size: 18px;
+  }
+
+  body {
+    padding: 10px;
+  }
+
+  #tooltip {
+    position: absolute;
+    text-align: center;
+    min-width: 50px;
+    min-height: 28px;
+    padding: 5px;
+    background: white;
+    stroke: gray;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+
+  
