@@ -81,8 +81,8 @@ function addToolTip (d) {
         .html("UUID is: " + d.uuid + "<br/>" +
             "Factory Time to temp: " + Math.round(d.t2t_1/60) +"<br/>" +
             "OTA Time to Temp: " + Math.round(d.t2t_2/60))
-        .style("left", `${d3.select(this).attr("cx") + 5}px`)
-        .style("top", `${d3.select(this).attr("cy") + 300}px`);
+        .style("left", `${d3.event.pageX + 15}px`)
+        .style("top", `${d3.event.pageY - 10}px`);
     //add highlight dot
     d3.select(this).style("stroke", "black").style("stroke-width", 3)
 }
