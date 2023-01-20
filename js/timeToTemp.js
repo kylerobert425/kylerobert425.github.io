@@ -72,7 +72,6 @@ function removeToolTip () {
 }
 
 function addToolTip (d) {
-  console.log(d3.select(this).attr("cx"))
     d3.select("#tooltip")
         .transition()
         .duration(200)
