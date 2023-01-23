@@ -1,65 +1,81 @@
 * {
-    font-family: "Work Sans", sans-serif;
-  }
-  
-  header {
-    text-align: left;
-    padding-bottom: 40px;
-    padding-right: 40px;
-    display: inline-block;
-    float: left;
-  }
-  
-  header div {
-    text-align: right;
-    float: left;
-    display: block;
-    font-size: 13px;
-    padding-left: 150px;
-  
-  }
-  
-  #header-wrap {
-    padding-top: 10px;
-    width: 95%;
-    margin: 0 auto;
-    align-content: center;
-  }
+  font-family: "Work Sans", sans-serif;
+}
 
-  #wrapper {
-    width: 95%;
-    margin: 0 auto;
-  }
+header {
+  text-align: left;
+  padding-bottom: 40px;
+  padding-right: 40px;
+  display: inline-block;
+  float: left;
+}
 
-  .text-blurb {
-    display: inline-block;
-    float: left;
-    padding-top: 5px;
-    padding-left: 10px;
-    max-width: 690px;
-    min-height: 100px;
-    font-size: 13px;
-  }
-  
-  .text-blurb span {
-    font-size: 18px;
-  }
+header div {
+  text-align: right;
+  float: left;
+  display: block;
+  font-size: 13px;
+  padding-left: 150px;
+}
 
-  body {
-    padding: 10px;
-  }
+#header-wrap {
+  padding-top: 10px;
+  width: 95%;
+  margin: 0 auto;
+  align-content: center;
+}
 
-  #tooltip {
-    position: absolute;
-    text-align: center;
-    min-width: 50px;
-    min-height: 28px;
-    padding: 5px;
-    background: white;
-    stroke: gray;
-    border-radius: 8px;
-    pointer-events: none;
-  }
+#wrapper {
+  width: 95%;
+  margin: 0 auto;
+}
 
+.text-blurb {
+  display: inline-block;
+  float: left;
+  padding-top: 5px;
+  padding-left: 10px;
+  max-width: 690px;
+  min-height: 100px;
+  font-size: 13px;
+}
 
-  
+.text-blurb span {
+  font-size: 18px;
+}
+
+li {
+  position: relative;
+}
+
+li:hover {
+  background-color: #b0c4de;
+}
+
+li:hover:after {
+  content: attr(title);
+  background: #fff;
+  padding: 5px 12px;
+  border: solid 1px #ddd;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+}
+
+body {
+  padding: 10px;
+}
+
+#tooltip {
+  position: absolute;
+  text-align: center;
+  min-width: 50px;
+  min-height: 28px;
+  padding: 5px;
+  background: white;
+  stroke: gray;
+  border-radius: 8px;
+  pointer-events: none;
+}
