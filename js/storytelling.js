@@ -4,7 +4,8 @@ function textBox() {
         performed on 45 Beta Model 2 Yosemite grills.  This goal of this testing was to determine the number of instances of 7 issues identified by customer service based on Model 4 service calls and the ability to fix these issues via an OTA firmware update. 
       `;
 
-  const issueBlurb = "The issues targeted in this testing are the following:";
+  const issueHead = "The issues targeted in this testing are the following ";
+  const issueSub = "(in order of impact):"
 
   const textDiv = d3.select("#header-wrap").append("div");
   textDiv
@@ -26,8 +27,8 @@ function textBox() {
   .style("opacity", 1);
 
   //issueDiv.append("html").html("</br>");
-  issueDiv.append("span").append("text").attr("opacity", 0).text(issueBlurb);
-
+  issueDiv.append("span").append("text").attr("opacity", 0).text(issueHead);
+  issueDiv.append("text").text(issueSub);
   issueDiv.append("html").html(`<ol id="issues_list">
   <li title = "This rarely occured, mainly if Gooey had out of date FW"> Display does not power on</li>
   <li title = "This was common, especially with the 2206.M08 config on smalls">Slow to temp</li>

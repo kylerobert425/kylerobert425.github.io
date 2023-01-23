@@ -52,6 +52,8 @@ li:hover {
   background-color: #b0c4de;
 }
 
+/* may want to adjust the position here... also how to hide the default tooltip? */
+
 li:hover:after {
   content: attr(title);
   background: #fff;
