@@ -34,6 +34,8 @@ class ErrorChart {
 
     let data_ready = pie(d3.entries(test_data));
 
+    d3.select("#error").append("div").attr("id", "tooltipD1")
+
     //build chart
     this.svg
       .selectAll("whatever")
@@ -52,6 +54,25 @@ class ErrorChart {
       })
       .attr("stroke", "black")
       .style("stroke-width", "2px")
-      .style("opacity", 0.7);
+      .style("opacity", 0.7)
+      .on("mouseover", onMouseEnter)
+      .on("mouseleave", onMouseLeave);
   }
+}
+function onMouseEnter(d) {
+  d3.select("#tooltipD1")
+  .transition()
+  .duration(200)
+  .style("opacity", 0.9);
+d3.select("#tooltipD1")
+  .html("Count of " + d.data.key + " values is: " + d.value)
+  .style("left", `${d3.event.pageX + 15}px`)
+  .style("top", `${d3.event.pageY - 10}px`);
+}
+
+function onMouseLeave() {
+  d3.select("#tooltipD1")
+  .transition()
+  .duration(500)
+  .style("opacity", 0);
 }
