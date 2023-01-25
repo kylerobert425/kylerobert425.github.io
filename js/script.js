@@ -15,4 +15,6 @@ allData = d3.json("./data/data.json").then((data) => {
 
   //add vis elements to divs
   let t2tChart = new TimeToTemp(t2tDiv, data);
+  console.log(data);
+  let errors = new ErrorChart(errorDiv, data);
 });
