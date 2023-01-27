@@ -24,8 +24,6 @@ class TimeToTemp {
 
     this.y = d3.scaleLinear().domain(domain).range([height, 0]);
 
-
-
     this.setup();
 
     this.updatePlot();
@@ -45,7 +43,7 @@ class TimeToTemp {
     // .voronoi([[margin.left, margin.top, width - margin.right, height - margin.bottom]]);
 
     //add tooltip div
-    d3.select("#t2t").append("div").attr("id", "tooltip");
+    d3.select("#t2t").append("div").attr("class", "tooltip");
 
   }
   updatePlot() {
@@ -68,7 +66,7 @@ class TimeToTemp {
 
 }
 function removeToolTip () {
-    d3.select("#tooltip")
+    d3.select("#t2t .tooltip")
         .transition()
         .duration(500)
         .style("opacity", 0);
@@ -80,11 +78,11 @@ function addToolTip (d) {
   let size = '';
   size = d.config === "2206.001" ?  "Small" : "Large";
 
-    d3.select("#tooltip")
+    d3.select("#t2t .tooltip")
         .transition()
         .duration(200)
         .style("opacity", 0.9);
-    d3.select("#tooltip")
+    d3.select("#t2t .tooltip")
         //this is getting a bit verbose....
         .html("Grill size - " + size + "<br/>" +
             "Factory Time to temp: " + Math.round(d.t2t_1/60) + "<br/>" +
