@@ -40,7 +40,7 @@ class ErrorChart {
 
     let data_ready = pie(d3.entries(test_data));
 
-    d3.select("#error").append("div").attr("id", "tooltipD1")
+    d3.select("#error").append("div").attr("class", "tooltip")
 
     //build chart
     this.svg
@@ -61,7 +61,7 @@ class ErrorChart {
       .attr("stroke", "black")
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
-      .on("mouseover", onMouseEnter)
+      .on("mousemove", onMouseEnter)
       .on("mouseleave", onMouseLeave);
 
       this.svg.append("text")
@@ -71,18 +71,18 @@ class ErrorChart {
 
 }
 function onMouseEnter(d) {
-  d3.select("#tooltipD1")
+  d3.select("#error .tooltip")
   .transition()
   .duration(200)
   .style("opacity", 0.9);
-d3.select("#toolyetipD1")
+d3.select("#error .tooltip")
   .html("Count of " + d.data.key + " values is: " + d.value)
   .style("left", `${d3.event.pageX + 15}px`)
   .style("top", `${d3.event.pageY - 10}px`);
 }
 
 function onMouseLeave() {
-  d3.select("#tooltipD1")
+  d3.select("#error .tooltip")
   .transition()
   .duration(500)
   .style("opacity", 0);

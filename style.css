@@ -70,7 +70,7 @@ body {
   padding: 10px;
 }
 
-#tooltip {
+.tooltip {
   position: absolute;
   text-align: center;
   min-width: 50px;
