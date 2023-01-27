@@ -21,6 +21,12 @@ class ErrorChart {
       .domain([true, false])
       .range(["#ef8a62", "#67a9cf"]);
 
+
+    //move to this for using the full data object...
+    // console.log(d3.groups(this.data, d => d.err_1b_str).map((i, j) => ({key: i[0], pos: j})));
+    console.log(d3.groups(this.data, d => d.err_1b_str));
+    console.log(d3.groups(this.data, d => d.err_1b_str).map((i, j) => ({err: i[0], count: Object.keys(i[1]).length})));
+    
     //want to check count of errors so this can be formatted easier
     let trues = this.data.filter((d) => d.err_1b_bool == true);
     trues = Object.keys(trues).length; //just want length...
@@ -57,14 +63,19 @@ class ErrorChart {
       .style("opacity", 0.7)
       .on("mouseover", onMouseEnter)
       .on("mouseleave", onMouseLeave);
+
+      this.svg.append("text")
+        .attr("text-anchor", "middle")
+        .text("Errors on Factory Code")
   }
+
 }
 function onMouseEnter(d) {
   d3.select("#tooltipD1")
   .transition()
   .duration(200)
   .style("opacity", 0.9);
-d3.select("#tooltipD1")
+d3.select("#toolyetipD1")
   .html("Count of " + d.data.key + " values is: " + d.value)
   .style("left", `${d3.event.pageX + 15}px`)
   .style("top", `${d3.event.pageY - 10}px`);
