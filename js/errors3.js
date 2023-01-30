@@ -1,9 +1,7 @@
 //size - thinking two donut graphs with errors and tooltip in center
-const d_margin = 40,
-  d_width = 350,
-  d_height = 350;
+//size from erros1
 
-class ErrorChart {
+class ErrorChart3 {
   constructor(div, data) {
     this.data = data;
     this.svg = d3
@@ -17,31 +15,20 @@ class ErrorChart {
     let radius = Math.min(d_width, d_height) / 2 - d_margin;
 
     //group data by errors
-    let groupData = d3.groups(this.data, (d) => d.err_1b_str);
+    let groupData = d3.groups(this.data, (d) => d.err_2_str);
     let errorCounts = groupData.map((i, j) => ({ err: i[0], count: Object.keys(i[1]).length }));
     // //why can't I get Object.entires/keys to work for this...
-    // console.log(Object.entries(groupData));
 
-    // console.log(errorCounts[2].err);
-
-    console.log(d3.entries(errorCounts));
-    //there's 6 errors for factory code...
+    //console.log(d3.entries(groupData));
+    
     let colorTF = d3
       .scaleOrdinal()
-      .domain([errorCounts[0].err, errorCounts[5].err, errorCounts[2].err, errorCounts[4].err, errorCounts[3].err, errorCounts[1].err ]) //No err, low pellets, long ignition...
+      .domain([errorCounts[0].err, errorCounts[1].err, errorCounts[2].err]) 
       // //the order here is annoying frick!  
       // .domain([errorCounts[5].err, errorCounts[4].err, errorCounts[3].err, errorCounts[2].err, errorCounts[1].err, errorCounts[0].err ])
       // .range(["#4575b4", "#91bfdb", "#ffffbf", "#fee090", "#fc8d59", "#d73027"  ]);
-      .range(["#4575b4" ,"#d73027" , "#ffffbf", "#fee090", "#fc8d59","#91bfdb" ])
+      .range(["#4575b4" , "#91bfdb" , "#d73027"])
 
-    // //just was checking count of errors...
-    // let trues = this.data.filter((d) => d.err_1b_bool == true);
-    // trues = Object.keys(trues).length; //just want length...
-
-    // let falses = this.data.filter((d) => d.err_1b_bool == false);
-    // falses = Object.keys(falses).length;
-
-    // let test_data = { t: trues, f: falses };
 
     let pie = d3.pie().value((d) => d.value.count);
 
@@ -60,7 +47,7 @@ class ErrorChart {
         "d",
         d3
           .arc()
-          .innerRadius(85) // This is the size of the donut hole
+          .innerRadius(hole) // This is the size of the donut hole
           .outerRadius(radius)
       )
       .attr("fill", function (d) {
@@ -72,7 +59,7 @@ class ErrorChart {
       .on("mousemove", onMouseEnter)
       .on("mouseleave", onMouseLeave);
 
-    this.svg.append("text").attr("text-anchor", "middle").html("Factory Code");
+    this.svg.append("text").attr("text-anchor", "middle").html("Updated Code");
   }
 }
 function onMouseEnter(d) {

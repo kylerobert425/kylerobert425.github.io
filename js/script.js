@@ -18,4 +18,7 @@ allData = d3.json("./data/data.json").then((data) => {
   let t2tChart = new TimeToTemp(t2tDiv, data);
   console.log(data);
   let errors = new ErrorChart(errorDiv, data);
+  //adding the other error charts, i'm sure this is awful practice but I'm just trying to get this done...
+  let errors2 = new ErrorChart2(errorDiv, data);
+  let errors3 = new ErrorChart3(error, data);
 });
