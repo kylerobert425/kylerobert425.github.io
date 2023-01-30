@@ -25,8 +25,11 @@ class TimeToTemp {
     this.y = d3.scaleLinear().domain(domain).range([height, 0]);
 
     this.setup();
-
     this.updatePlot();
+
+    //stats for displaying...
+
+
   }
   setup() {
     //add axissss
@@ -72,11 +75,21 @@ function removeToolTip () {
         .style("opacity", 0);
     //remove highlight dot
     d3.select(this).style("stroke", (d) => color(d.config)).style("stroke-width", 0.8)
+    d3.select("#comment").transition()
+    .duration(500)
+    .style("opacity", 0);
+    d3.select("#codeUsed").transition()
+    .duration(500)
+    .style("opacity", 0);
 }
 
 function addToolTip (d) {
   let size = '';
   size = d.config === "2206.001" ?  "Small" : "Large";
+
+  let errorString1 = d.com_1a ? "Comments During Seasoning: " + d.com_1a : '';
+  let errorString2 = d.com_1b ? "Comments during Test 1: " + d.com_1b : '';
+  let errorString3 = d.com_2 ? "Comments during Test 2: " + d.com_2 : '';
 
     d3.select("#t2t .tooltip")
         .transition()
@@ -86,11 +99,16 @@ function addToolTip (d) {
         //this is getting a bit verbose....
         .html("Grill size - " + size + "<br/>" +
             "Factory Time to temp: " + Math.round(d.t2t_1/60) + "<br/>" +
-            "Factory Config: " + d.config + "<br/>" +
-            "OTA Time to Temp: " + Math.round(d.t2t_2/60) + "<br/>" +
-            "OTA Config: " + d.config_2)
+            // "Factory Config: " + d.config + "<br/>" +
+            "OTA Time to Temp: " + Math.round(d.t2t_2/60) )
+            // "OTA Config: " + d.config_2)
         .style("left", `${d3.event.pageX + 15}px`)
         .style("top", `${d3.event.pageY - 10}px`);
     //add highlight dot
     d3.select(this).style("stroke", (d) => color(d.config)).style("stroke-width", 4)
+    d3.select("#comment").transition().duration(200).style("opacity", 0.9);
+    d3.select("#comment").html(errorString1 + "<br/>" + errorString2 + "<br/>" + errorString3);
+    d3.select("#codeUsed").transition().duration(200).style("opacity", 0.9);
+    d3.select("#codeUsed").html("Factory Code, Gooey: " + d.g_fw + " Kirby: " + d.k_fw + " Config: " + d.config + "<br/>" + 
+    "Factory Code, Gooey: " + d.g_fw_2 + " Kirby: " + d.k_fw_2 + " Config: " + d.config_2)
 }

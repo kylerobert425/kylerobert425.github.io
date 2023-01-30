@@ -9,10 +9,13 @@ allData = d3.json("./data/data.json").then((data) => {
   textBox();
   
   let errorDiv = wrapperDiv.append("div").attr("id", "error");
+  let errorComments = errorDiv.append("div").append("text").attr("id", "errorComs");
   let t2tDiv = wrapperDiv.append("div").attr("id", "t2t");
+  let codeDiv = wrapperDiv.append("div").append("text").attr("id", "codeUsed");
   let gooeyDiv = wrapperDiv.append("div").attr("id", "gooey");
   
-  let commentDiv = wrapperDiv.append("div").attr("id", "comment");
+  
+  let commentDiv = wrapperDiv.append("div").append("text").attr("id", "comment");
 
   //add vis elements to divs
   let t2tChart = new TimeToTemp(t2tDiv, data);

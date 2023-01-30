@@ -81,3 +81,8 @@ body {
   border-radius: 8px;
   pointer-events: none;
 }
+
+#codeUsed {
+  text-align: center;
+  font-size: 18px;
+}

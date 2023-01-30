@@ -72,6 +72,7 @@ function onMouseEnter(d) {
     .html("Count of " + d.data.value.err + " " + d.value)  //error string syntax seems completely bananas...
     .style("left", `${d3.event.pageX + 15}px`)
     .style("top", `${d3.event.pageY - 10}px`);
+
 }
 
 function onMouseLeave() {

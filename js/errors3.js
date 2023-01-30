@@ -16,6 +16,7 @@ class ErrorChart3 {
 
     //group data by errors
     let groupData = d3.groups(this.data, (d) => d.err_2_str);
+
     let errorCounts = groupData.map((i, j) => ({ err: i[0], count: Object.keys(i[1]).length }));
     // //why can't I get Object.entires/keys to work for this...
 
@@ -68,6 +69,9 @@ function onMouseEnter(d) {
     .html("Count of " + d.data.value.err + " " + d.value)  //error string syntax seems completely bananas...
     .style("left", `${d3.event.pageX + 15}px`)
     .style("top", `${d3.event.pageY - 10}px`);
+
+  // d3.select("#errorComs")
+  //   .text("Error count " + d.value);
 }
 
 function onMouseLeave() {
