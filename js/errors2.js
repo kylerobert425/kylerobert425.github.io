@@ -57,7 +57,17 @@ class ErrorChart2 {
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
       .on("mousemove", onMouseEnter)
-      .on("mouseleave", onMouseLeave);
+      .on("mouseleave", function(d) {
+        let currentErr = d.data.value.err;
+        let selectedDots = d3.selectAll('circle').filter(d=> d.err_1b_str === currentErr);
+        selectedDots.style("fill", (d) => color(d.config)).style("opacity", 0.7);
+        onMouseLeave;
+      })
+      .on("mouseover", function(d,i){
+        let currentErr = d.data.value.err;
+        let selectedDots = d3.selectAll('circle').filter(d=> d.err_1b_str === currentErr);
+        selectedDots.style("fill", 'orange').attr("r", 7).style("opacity", 0.9);
+      });
 
     this.svg.append("text").attr("text-anchor", "middle").html("Factory Code");
   }

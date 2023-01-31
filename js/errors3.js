@@ -57,7 +57,14 @@ class ErrorChart3 {
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
       .on("mousemove", onMouseEnter)
-      .on("mouseleave", onMouseLeave);
+      .on("mouseleave", onMouseLeave)
+      .on("mouseover", function(d,i){
+        let currentErr = d.data.value.err;
+        console.log(currentErr);
+        d3.selectAll('circle').filter(d=> d.err_2_str === currentErr).classed("errorSelection", true);
+      });
+
+      //d => d.data.value.err == i.err_2_str
 
     this.svg.append("text").attr("text-anchor", "middle").html("Updated Code");
   }
