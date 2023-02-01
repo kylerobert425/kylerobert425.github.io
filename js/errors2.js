@@ -19,14 +19,9 @@ class ErrorChart2 {
     let errorCounts = groupData.map((i, j) => ({ err: i[0], count: Object.keys(i[1]).length }));
     // //why can't I get Object.entires/keys to work for this...
 
-    //console.log(d3.entries(groupData));
-    //there's 6 errors for factory code...
     let colorTF = d3
       .scaleOrdinal()
-      .domain([errorCounts[0].err, errorCounts[5].err, errorCounts[2].err, errorCounts[4].err, errorCounts[3].err, errorCounts[1].err ]) //No err, low pellets, long ignition...
-      // //the order here is annoying frick!  
-      // .domain([errorCounts[5].err, errorCounts[4].err, errorCounts[3].err, errorCounts[2].err, errorCounts[1].err, errorCounts[0].err ])
-      // .range(["#4575b4", "#91bfdb", "#ffffbf", "#fee090", "#fc8d59", "#d73027"  ]);
+      .domain([errorCounts[0].err, errorCounts[5].err, errorCounts[2].err, errorCounts[4].err, errorCounts[3].err, errorCounts[1].err ]) 
       .range(["#4575b4" ,"#d73027" , "#ffffbf", "#fee090", "#fc8d59","#91bfdb" ])
 
 

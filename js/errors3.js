@@ -25,9 +25,6 @@ class ErrorChart3 {
     let colorTF = d3
       .scaleOrdinal()
       .domain([errorCounts[0].err, errorCounts[1].err, errorCounts[2].err]) 
-      // //the order here is annoying frick!  
-      // .domain([errorCounts[5].err, errorCounts[4].err, errorCounts[3].err, errorCounts[2].err, errorCounts[1].err, errorCounts[0].err ])
-      // .range(["#4575b4", "#91bfdb", "#ffffbf", "#fee090", "#fc8d59", "#d73027"  ]);
       .range(["#4575b4" , "#91bfdb" , "#d73027"])
 
 
@@ -58,11 +55,15 @@ class ErrorChart3 {
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
       .on("mousemove", onMouseEnter)
-      .on("mouseleave", onMouseLeave)
+      .on("mouseleave", function(d,i){
+        let currentErr = d.data.value.err;
+        d3.selectAll('circle').filter(d=> d.err_2_str === currentErr).classed("errorSelection", true);
+        onMouseLeave;
+      })
       .on("mouseover", function(d,i){
         let currentErr = d.data.value.err;
-        console.log(currentErr);
-        d3.selectAll('circle').filter(d=> d.err_2_str === currentErr).classed("errorSelection", true);
+        let selectedDots = d3.selectAll('circle').filter(d=> d.err_2_str === currentErr);
+        selectedDots.style("fill", 'orange').attr("r", 7).style("opacity", 0.9);
       });
 
       //d => d.data.value.err == i.err_2_str
