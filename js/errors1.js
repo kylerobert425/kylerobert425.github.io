@@ -1,8 +1,11 @@
 //size - thinking two donut graphs with errors and tooltip in center
 const d_margin = 40,
   d_width = 300,
-  d_height = 300, 
+  d_height = 300,
   hole = 60;
+
+// transition timing
+const animate = 500;
 
 class ErrorChart {
   constructor(div, data) {
@@ -19,7 +22,10 @@ class ErrorChart {
 
     //group data by errors
     let groupData = d3.groups(this.data, (d) => d.seas_err_str);
-    let errorCounts = groupData.map((i, j) => ({ err: i[0], count: Object.keys(i[1]).length }));
+    let errorCounts = groupData.map((i, j) => ({
+      err: i[0],
+      count: Object.keys(i[1]).length,
+    }));
     // //why can't I get Object.entires/keys to work for this...
 
     //console.log(d3.entries(groupData));
@@ -27,9 +33,13 @@ class ErrorChart {
 
     let colorTF = d3
       .scaleOrdinal()
-      .domain([errorCounts[0].err, errorCounts[1].err, errorCounts[2].err, errorCounts[3].err]) 
-      .range(["#4575b4" ,"#fc8d59" , "#ffffbf", "#fee090" ])
-
+      .domain([
+        errorCounts[0].err,
+        errorCounts[1].err,
+        errorCounts[2].err,
+        errorCounts[3].err,
+      ])
+      .range(["#4575b4", "#fc8d59", "#ffffbf", "#fee090"]);
 
     let pie = d3.pie().value((d) => d.value.count);
 
@@ -58,17 +68,35 @@ class ErrorChart {
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
       .on("mousemove", onMouseEnter)
-      .on("mouseleave", function(d) {
+      .on("mouseleave", function (d) {
         let currentErr = d.data.value.err;
-        let selectedDots = d3.selectAll('circle').filter(d=> d.seas_err_str === currentErr);
-        selectedDots.style("fill", (d) => color(d.config)).style("opacity", 0.7);
+        let selectedDots = d3
+          .selectAll("circle")
+          .filter((d) => d.seas_err_str === currentErr);
+        selectedDots
+          .transition()
+          .duration(animate)
+          .style("fill", (d) => color(d.config))
+          .style("opacity", 0.7)
+          .attr("r", 6);
         //mouseleave doesnt work...
-        d3.select("#error .tooltip").transition().duration(500).style("opacity", 0);
+        d3.select("#error .tooltip")
+          .transition()
+          .duration(animate)
+          .style("opacity", 0);
       })
-      .on("mouseover",function(d,i){
+      .on("mouseover", function (d, i) {
         let currentErr = d.data.value.err;
-        let selectedDots = d3.selectAll('circle').filter(d=> d.seas_err_str === currentErr);
-        selectedDots.style("fill", 'orange').attr("r", 7).style("opacity", 0.9);
+        let selectedDots = d3
+          .selectAll("circle")
+          .filter((d) => d.seas_err_str === currentErr);
+        selectedDots
+        .style("fill", "orange")
+        .attr("r", 10)
+          .transition()
+          .duration(animate)
+          .attr("r", 7)
+          .style("opacity", 0.9);
       });
 
     this.svg.append("text").attr("text-anchor", "middle").html("Seasoning");
@@ -77,10 +105,9 @@ class ErrorChart {
 function onMouseEnter(d) {
   d3.select("#error .tooltip").transition().duration(200).style("opacity", 0.9);
   d3.select("#error .tooltip")
-    .html("Count of " + d.data.value.err + " " + d.value)  //error string syntax seems completely bananas...
+    .html("Count of " + d.data.value.err + " " + d.value) //error string syntax seems completely bananas...
     .style("left", `${d3.event.pageX + 15}px`)
     .style("top", `${d3.event.pageY - 10}px`);
-
 }
 
 function onMouseLeave() {

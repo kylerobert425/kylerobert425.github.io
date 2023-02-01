@@ -92,8 +92,8 @@ function removeToolTip() {
   d3.select(this)
     .style("stroke", (d) => color(d.config))
     .style("stroke-width", 0.8);
-  d3.select("#comment").transition().duration(500).style("opacity", 0);
-  d3.select("#codeUsed").transition().duration(500).style("opacity", 0);
+  //d3.select("#comment").transition().duration(500).style("opacity", 0);
+  //d3.select("#codeUsed").transition().duration(500).style("opacity", 0);
 }
 
 function addToolTip(d) {
