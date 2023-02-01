@@ -1,10 +1,13 @@
 //size
 const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-  width = 460 - margin.left - margin.right,
-  height = 400 - margin.top - margin.bottom;
+  width = 560 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom;
 
 //color scale
-const color = d3.scaleOrdinal().domain(['2206.001', '2205.001']).range(["#1f78b4", "#7dad6a"]);
+const color = d3
+  .scaleOrdinal()
+  .domain(["2206.001", "2205.001"])
+  .range(["#1f78b4", "#7dad6a"]);
 
 //constructor
 class TimeToTemp {
@@ -25,11 +28,9 @@ class TimeToTemp {
     this.y = d3.scaleLinear().domain(domain).range([height, 0]);
 
     this.setup();
-    this.updatePlot();
+    this.updatePlot(domain);
 
     //stats for displaying...
-
-
   }
   setup() {
     //add axissss
@@ -47,9 +48,27 @@ class TimeToTemp {
 
     //add tooltip div
     d3.select("#t2t").append("div").attr("class", "tooltip");
-
   }
-  updatePlot() {
+  updatePlot(domain) {
+    //target lines:
+    this.svg
+      .append("line")
+      .attr("x1", this.x(1500))
+      .attr("x2", this.x(1500))
+      .attr("y1", this.y(domain[0]))
+      .attr("y2", this.y(domain[1]))
+      .style("stroke", "lightgrey")
+      .style("stroke-width", 4)
+      .style("opacity", 0.8);
+    this.svg
+      .append("line")
+      .attr("y1", this.y(1500))
+      .attr("y2", this.y(1500))
+      .attr("x1", this.x(domain[0]))
+      .attr("x2", this.x(domain[1]))
+      .style("stroke", "lightgrey")
+      .style("stroke-width", 4)
+      .style("opacity", 0.8);
     //add dots to graph
     this.svg
       .append("g")
@@ -66,49 +85,64 @@ class TimeToTemp {
       .on("mouseover", addToolTip)
       .on("mouseleave", removeToolTip);
   }
-
 }
-function removeToolTip () {
-    d3.select("#t2t .tooltip")
-        .transition()
-        .duration(500)
-        .style("opacity", 0);
-    //remove highlight dot
-    d3.select(this).style("stroke", (d) => color(d.config)).style("stroke-width", 0.8)
-    d3.select("#comment").transition()
-    .duration(500)
-    .style("opacity", 0);
-    d3.select("#codeUsed").transition()
-    .duration(500)
-    .style("opacity", 0);
+function removeToolTip() {
+  d3.select("#t2t .tooltip").transition().duration(500).style("opacity", 0);
+  //remove highlight dot
+  d3.select(this)
+    .style("stroke", (d) => color(d.config))
+    .style("stroke-width", 0.8);
+  d3.select("#comment").transition().duration(500).style("opacity", 0);
+  d3.select("#codeUsed").transition().duration(500).style("opacity", 0);
 }
 
-function addToolTip (d) {
-  let size = '';
-  size = d.config === "2206.001" ?  "Small" : "Large";
+function addToolTip(d) {
+  let size = "";
+  size = d.config === "2206.001" ? "Small" : "Large";
 
-  let errorString1 = d.com_1a ? "Comments During Seasoning: " + d.com_1a : '';
-  let errorString2 = d.com_1b ? "Comments during Test 1: " + d.com_1b : '';
-  let errorString3 = d.com_2 ? "Comments during Test 2: " + d.com_2 : '';
+  let errorString1 = d.com_1a ? "Comments During Seasoning: " + d.com_1a : "";
+  let errorString2 = d.com_1b ? "Comments during Test 1: " + d.com_1b : "";
+  let errorString3 = d.com_2 ? "Comments during Test 2: " + d.com_2 : "";
 
-    d3.select("#t2t .tooltip")
-        .transition()
-        .duration(200)
-        .style("opacity", 0.9);
-    d3.select("#t2t .tooltip")
-        //this is getting a bit verbose....
-        .html("Grill size - " + size + "<br/>" +
-            "Factory Time to temp: " + Math.round(d.t2t_1/60) + "<br/>" +
-            // "Factory Config: " + d.config + "<br/>" +
-            "OTA Time to Temp: " + Math.round(d.t2t_2/60) )
-            // "OTA Config: " + d.config_2)
-        .style("left", `${d3.event.pageX + 15}px`)
-        .style("top", `${d3.event.pageY - 10}px`);
-    //add highlight dot
-    d3.select(this).style("stroke", (d) => color(d.config)).style("stroke-width", 4)
-    d3.select("#comment").transition().duration(200).style("opacity", 0.9);
-    d3.select("#comment").html(errorString1 + "<br/>" + errorString2 + "<br/>" + errorString3);
-    d3.select("#codeUsed").transition().duration(200).style("opacity", 0.9);
-    d3.select("#codeUsed").html("Factory Code, Gooey: " + d.g_fw + " Kirby: " + d.k_fw + " Config: " + d.config + "<br/>" + 
-    "Factory Code, Gooey: " + d.g_fw_2 + " Kirby: " + d.k_fw_2 + " Config: " + d.config_2)
+  d3.select("#t2t .tooltip").transition().duration(200).style("opacity", 0.9);
+  d3.select("#t2t .tooltip")
+    //this is getting a bit verbose....
+    .html(
+      "Grill size - " +
+        size +
+        "<br/>" +
+        "Factory Time to temp: " +
+        Math.round(d.t2t_1 / 60) +
+        "<br/>" +
+        // "Factory Config: " + d.config + "<br/>" +
+        "OTA Time to Temp: " +
+        Math.round(d.t2t_2 / 60)
+    )
+    // "OTA Config: " + d.config_2)
+    .style("left", `${d3.event.pageX + 15}px`)
+    .style("top", `${d3.event.pageY - 10}px`);
+  //add highlight dot
+  d3.select(this)
+    .style("stroke", (d) => color(d.config))
+    .style("stroke-width", 4);
+  d3.select("#comment").transition().duration(200).style("opacity", 0.9);
+  d3.select("#comment").html(
+    errorString1 + "<br/>" + errorString2 + "<br/>" + errorString3
+  );
+  d3.select("#codeUsed").transition().duration(200).style("opacity", 0.9);
+  d3.select("#codeUsed").html(
+    "Factory Code, Gooey: " +
+      d.g_fw +
+      " Kirby: " +
+      d.k_fw +
+      " Config: " +
+      d.config +
+      "<br/>" +
+      "Factory Code, Gooey: " +
+      d.g_fw_2 +
+      " Kirby: " +
+      d.k_fw_2 +
+      " Config: " +
+      d.config_2
+  );
 }
