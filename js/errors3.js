@@ -58,14 +58,19 @@ class ErrorChart3 {
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
       .on("mousemove", onMouseEnter)
-      .on("mouseleave", onMouseLeave)
+      .on("mouseleave", function(d) {
+        let currentErr = d.data.value.err;
+      let selectedDots = d3.selectAll('circle').filter(d=> d.err_2_str === currentErr);
+      selectedDots.style("fill", (d) => color(d.config)).style("opacity", 0.7);
+      //onMouseLeave not working... cause its in a fxn?
+      d3.select("#error .tooltip").transition().duration(500).style("opacity", 0);
+      
+      })
       .on("mouseover", function(d,i){
         let currentErr = d.data.value.err;
         console.log(currentErr);
-        d3.selectAll('circle').filter(d=> d.err_2_str === currentErr).classed("errorSelection", true);
+        d3.selectAll('circle').filter(d=> d.err_2_str === currentErr).style("fill", "orange").attr("r", 7).style("opacity", 0.9);
       });
-
-      //d => d.data.value.err == i.err_2_str
 
     this.svg.append("text").attr("text-anchor", "middle").html("Updated Code");
   }

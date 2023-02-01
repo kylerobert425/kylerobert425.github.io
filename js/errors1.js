@@ -28,9 +28,6 @@ class ErrorChart {
     let colorTF = d3
       .scaleOrdinal()
       .domain([errorCounts[0].err, errorCounts[1].err, errorCounts[2].err, errorCounts[3].err]) 
-      // //the order here is annoying frick!  
-      // .domain([errorCounts[5].err, errorCounts[4].err, errorCounts[3].err, errorCounts[2].err, errorCounts[1].err, errorCounts[0].err ])
-      // .range(["#4575b4", "#91bfdb", "#ffffbf", "#fee090", "#fc8d59", "#d73027"  ]);
       .range(["#4575b4" ,"#fc8d59" , "#ffffbf", "#fee090" ])
 
 
@@ -61,7 +58,18 @@ class ErrorChart {
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
       .on("mousemove", onMouseEnter)
-      .on("mouseleave", onMouseLeave);
+      .on("mouseleave", function(d) {
+        let currentErr = d.data.value.err;
+        let selectedDots = d3.selectAll('circle').filter(d=> d.seas_err_str === currentErr);
+        selectedDots.style("fill", (d) => color(d.config)).style("opacity", 0.7);
+        //mouseleave doesnt work...
+        d3.select("#error .tooltip").transition().duration(500).style("opacity", 0);
+      })
+      .on("mouseover",function(d,i){
+        let currentErr = d.data.value.err;
+        let selectedDots = d3.selectAll('circle').filter(d=> d.seas_err_str === currentErr);
+        selectedDots.style("fill", 'orange').attr("r", 7).style("opacity", 0.9);
+      });
 
     this.svg.append("text").attr("text-anchor", "middle").html("Seasoning");
   }
