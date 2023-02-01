@@ -99,14 +99,21 @@ function removeToolTip() {
 function addToolTip(d) {
   let size = "";
   size = d.config === "2206.001" ? "Small" : "Large";
-
   let errorString1 = d.com_1a ? "Comments During Seasoning: " + d.com_1a : "";
   let errorString2 = d.com_1b ? "Comments during Test 1: " + d.com_1b : "";
   let errorString3 = d.com_2 ? "Comments during Test 2: " + d.com_2 : "";
 
+  let errorComment = "";
+  // errorComment = d.seas_err_bool ? errorString1 + "<br/>" : "";
+  // errorComment += d.err_1b_bool ? errorString2 + "<br/>" : "";
+  // errorComment += d.err_2_bool ? errorString3 + "<br/>" : "";
+
+  errorComment = d.com_1a ? errorString1 + "<br/>" : "";
+  errorComment += d.com_1b ? errorString2 + "<br/>" : "";
+  errorComment += d.com_2 ? errorString3 + "<br/>" : "";
+
   d3.select("#t2t .tooltip").transition().duration(200).style("opacity", 0.9);
   d3.select("#t2t .tooltip")
-    //this is getting a bit verbose....
     .html(
       "Grill size - " +
         size +
@@ -126,23 +133,29 @@ function addToolTip(d) {
     .style("stroke", (d) => color(d.config))
     .style("stroke-width", 4);
   d3.select("#comment").transition().duration(200).style("opacity", 0.9);
-  d3.select("#comment").html(
-    errorString1 + "<br/>" + errorString2 + "<br/>" + errorString3
-  );
+
+  d3.select("#comment").html(errorComment);
   d3.select("#codeUsed").transition().duration(200).style("opacity", 0.9);
   d3.select("#codeUsed").html(
-    "Factory Code, Gooey: " +
-      d.g_fw +
+    // console.log()
+    "Factory Code, Gooey: " + 
+      `<span class = g${d.g_fw.split('.').join("")}>${d.g_fw}` + 
+      "</span>" +
       " Kirby: " +
-      d.k_fw +
+      `<span class = k${d.k_fw.split('.').join("")}>${d.k_fw}` + 
+      "</span>" +
       " Config: " +
-      d.config +
+      `<span class = c${d.config.split('.').join("")}>${d.config}` + 
+      "</span>" +
       "<br/>" +
       "Factory Code, Gooey: " +
-      d.g_fw_2 +
+      `<span class = g${d.g_fw_2.split('.').join("")}>${d.g_fw_2}` + 
+      "</span>" +
       " Kirby: " +
-      d.k_fw_2 +
+      `<span class = k${d.k_fw_2.split('.').join("")}>${d.k_fw_2}` + 
+      "</span>" +
       " Config: " +
-      d.config_2
+      `<span class = c${d.config_2.split('.').join("")}>${d.config_2}` + 
+      "</span>"
   );
 }

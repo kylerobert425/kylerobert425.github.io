@@ -86,3 +86,37 @@ body {
   text-align: center;
   font-size: 18px;
 }
+/* code version highlights */
+
+/* factory colors in blues */
+.g010312, .k010313  {
+  background-color: #8dd3c7;
+}
+.c2205001, .c2206001{
+  background-color: #80b1d3;
+}
+/* "wrong" versions in shades of red */
+.g000207 {
+  background-color: #fb8072;
+}
+.g010311 {
+  background-color: #fccde5;
+}
+.c2206M08, .c2205M11 {
+  background-color: #fdb462;
+}
+/* memfault versions in green shades... */
+.k910411 {
+  background-color: #d9f0a3;
+}
+.k910412 {
+  background-color: #addd8e;
+}
+.k910413 {
+  background-color: #78c679;
+}
+.k910414 {
+  background-color: #41ab5d;
+}
+
+
