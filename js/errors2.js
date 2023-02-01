@@ -56,7 +56,8 @@ class ErrorChart2 {
         let currentErr = d.data.value.err;
         let selectedDots = d3.selectAll('circle').filter(d=> d.err_1b_str === currentErr);
         selectedDots.style("fill", (d) => color(d.config)).style("opacity", 0.7);
-        onMouseLeave;
+        //mouseleave doesnt work...
+        d3.select("#error .tooltip").transition().duration(500).style("opacity", 0);      
       })
       .on("mouseover", function(d,i){
         let currentErr = d.data.value.err;

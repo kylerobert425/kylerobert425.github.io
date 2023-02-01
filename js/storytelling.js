@@ -34,7 +34,7 @@ function textBox() {
   <li title = "This was common, especially with the 2206.M08 config on smalls">Slow to temp</li>
   <li title = "Similar to number 1, this mainly happened if Gooey FW was out of date" >Frozen screen</li>
   <li title = "This was the MOST COMMON issue to occur on the Factory FW but never occured on the OTA1 FW">Igniter not detected</li>
-  <li title = "This issue never occured">Frozen screen at "ready to cook"</li>
+  <li title = "This happened 4 times during the test">Frozen screen at "ready to cook"</li>
   <li title = "This issue never occured">Grill seasoning skipped</li>
   <li title = "This occured on one grill with a faulty sensor">Lid sesnsor error</li>
   <li title = "This issue never occured">Flame sensor error</li>
