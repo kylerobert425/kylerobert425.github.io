@@ -82,6 +82,21 @@ body {
   pointer-events: none;
 }
 
+.infotip {
+  position: absolute;
+  text-align: center;
+  min-width: 50px;
+  min-height: 28px;
+  padding: 5px;
+  background: lightgrey;
+  stroke: gray;
+  pointer-events: none;
+}
+
+.question {
+  background: lightblue;
+}
+
 #codeUsed {
   text-align: center;
   font-size: 18px;

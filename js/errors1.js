@@ -30,18 +30,20 @@ class ErrorChart {
 
     //console.log(d3.entries(groupData));
     //there's 4 errors for factory code...
-
+    console.log(errorCounts);
     let colorTF = d3
       .scaleOrdinal()
       .domain([
         errorCounts[0].err,
         errorCounts[1].err,
         errorCounts[2].err,
+        errorCounts[5].err,
+        errorCounts[4].err,
         errorCounts[3].err,
       ])
-      .range(["#4575b4", "#fc8d59", "#ffffbf", "#fee090"]);
+      .range(["#4575b4", "#fc8d59", "#ffffbf", "#fee090", "#74add1", "#d73027"]);
 
-    let pie = d3.pie().value((d) => d.value.count);
+    let pie = d3.pie().value((d) => d.value.count).sort(null);
 
     let data_ready = pie(d3.entries(errorCounts));
     // //this seems insane:

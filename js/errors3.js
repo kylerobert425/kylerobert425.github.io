@@ -31,7 +31,7 @@ class ErrorChart3 {
       .domain([errorCounts[0].err, errorCounts[1].err, errorCounts[2].err])
       .range(["#4575b4", "#91bfdb", "#d73027"]);
 
-    let pie = d3.pie().value((d) => d.value.count);
+    let pie = d3.pie().value((d) => d.value.count).sort(null);
 
     let data_ready = pie(d3.entries(errorCounts));
     // //this seems insane:

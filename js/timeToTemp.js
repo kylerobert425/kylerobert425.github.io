@@ -1,5 +1,5 @@
 //size
-const margin = { top: 10, right: 30, bottom: 30, left: 60 },
+const margin = { top: 10, right: 50, bottom: 50, left: 60 },
   width = 560 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
 
@@ -21,7 +21,7 @@ class TimeToTemp {
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    const domain = [500, 3000]; //may want to extend from 0...
+    const domain = [seconds(500), seconds(3000)]; //may want to extend from 0...
 
     this.x = d3.scaleLinear().domain(domain).range([0, width]);
 
@@ -29,7 +29,6 @@ class TimeToTemp {
 
     this.setup();
     this.updatePlot(domain);
-
     //stats for displaying...
   }
   setup() {
@@ -37,9 +36,27 @@ class TimeToTemp {
     this.svg
       .append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(this.x));
+      .call(d3.axisBottom(this.x))
+      .style("font-size", "18px");
 
-    this.svg.append("g").call(d3.axisLeft(this.y));
+    this.svg.append("g").call(d3.axisLeft(this.y))
+    .style("font-size", "18px");
+
+    //axis titles:
+    this.svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("x", width)
+    .attr("y", height + margin.top + 30)
+    .text("Factory Code Time to Temp [Mins]")
+    .style("font-size", "16px");
+
+    this.svg.append("text")
+    .attr("text-anchor", "end")
+    .attr("transform", "rotate(-90)")
+    .attr("y", -margin.left+20)
+    .attr("x", -margin.top)
+    .text("OTA Code Time to Temp [Mins]")
+    .style("font-size", "16px")
 
     //curious if I can add voronoi so you dont have to mouse over each point... probably need to "require" Delaunay somewhere....
 
@@ -48,13 +65,33 @@ class TimeToTemp {
 
     //add tooltip div
     d3.select("#t2t").append("div").attr("class", "tooltip");
+
+    //add info tip and graph explaination....
+    let infotip = d3.select("#t2t").append("div").attr("class", "infotip").style('position', 'fixed').style('opacity', 0);
+
+    let img = 'data/explainer.png';
+
+    d3.select("#t2t").append('text')
+    .attr("class", "question")
+    .attr('text-anchor', 'top')
+    .text("(?)")
+    .style('stroke', 'red')  //why doesn't this work?
+    .style('font-size', '25px')
+    .on('mouseover', function(d){
+      infotip.transition().duration(animate).style('opacity', 1);
+      let string = "<h2>WTH am I looking at???</h2>\n  <img src= data/explainer.png width='525' height=525 />";
+      infotip.html(string).style("top", d3.event.pageY - 700 + 'px').style("left", d3.event.pageX - 550 + 'px');   
+    })
+    .on('mouseout', function(d){
+      infotip.transition().duration(200).style('opacity', 0);
+    })
   }
   updatePlot(domain) {
     //target lines:
     this.svg
       .append("line")
-      .attr("x1", this.x(1500))
-      .attr("x2", this.x(1500))
+      .attr("x1", this.x(seconds(1500)))
+      .attr("x2", this.x(seconds(1500)))
       .attr("y1", this.y(domain[0]))
       .attr("y2", this.y(domain[1]))
       .style("stroke", "lightgrey")
@@ -62,8 +99,8 @@ class TimeToTemp {
       .style("opacity", 0.8);
     this.svg
       .append("line")
-      .attr("y1", this.y(1500))
-      .attr("y2", this.y(1500))
+      .attr("y1", this.y(seconds(1500)))
+      .attr("y2", this.y(seconds(1500)))
       .attr("x1", this.x(domain[0]))
       .attr("x2", this.x(domain[1]))
       .style("stroke", "lightgrey")
@@ -77,8 +114,8 @@ class TimeToTemp {
       .enter()
       .append("circle")
       .attr("class", (d, i) => "point " + d.uuid)
-      .attr("cx", (d) => this.x(d.t2t_1))
-      .attr("cy", (d) => this.y(d.t2t_2))
+      .attr("cx", (d) => this.x(seconds(d.t2t_1)))
+      .attr("cy", (d) => this.y(seconds(d.t2t_2)))
       .attr("r", 6)
       .style("fill", (d) => color(d.config))
       .style("opacity", 0.7)
@@ -119,11 +156,11 @@ function addToolTip(d) {
         size +
         "<br/>" +
         "Factory Time to temp: " +
-        Math.round(d.t2t_1 / 60) +
+        Math.round(seconds(d.t2t_1)) +
         "<br/>" +
         // "Factory Config: " + d.config + "<br/>" +
         "OTA Time to Temp: " +
-        Math.round(d.t2t_2 / 60)
+        Math.round(seconds(d.t2t_2))
     )
     // "OTA Config: " + d.config_2)
     .style("left", `${d3.event.pageX + 15}px`)
@@ -137,7 +174,6 @@ function addToolTip(d) {
   d3.select("#comment").html(errorComment);
   d3.select("#codeUsed").transition().duration(200).style("opacity", 0.9);
   d3.select("#codeUsed").html(
-    // console.log()
     "Factory Code, Gooey: " + 
       `<span class = g${d.g_fw.split('.').join("")}>${d.g_fw}` + 
       "</span>" +
@@ -158,4 +194,7 @@ function addToolTip(d) {
       `<span class = c${d.config_2.split('.').join("")}>${d.config_2}` + 
       "</span>"
   );
+}
+function seconds(n) {
+  return Math.round(n/60*100)/100;
 }
