@@ -10,6 +10,9 @@ const animate = 500;
 class ErrorChart {
   constructor(div, data) {
     this.data = data;
+
+    d3.select("#error").html("<h2>Error Results per Test</h2>");
+
     this.svg = d3
       .select("#error")
       .append("svg")
@@ -41,7 +44,7 @@ class ErrorChart {
         errorCounts[4].err,
         errorCounts[3].err,
       ])
-      .range(["#4575b4", "#fc8d59", "#ffffbf", "#fee090", "#74add1", "#d73027"]);
+      .range(["#4575b4",  "#fc8d59","#d73027",  "#ffffbf","#f46d43", "#a50026"]);
 
     let pie = d3.pie().value((d) => d.value.count).sort(null);
 

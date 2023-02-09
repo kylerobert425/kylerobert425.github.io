@@ -7,27 +7,53 @@ header {
   padding-bottom: 40px;
   padding-right: 40px;
   display: inline-block;
-  float: left;
+  /* float: right; */
 }
 
 header div {
-  text-align: right;
+  text-align: left;
   float: left;
   display: block;
   font-size: 13px;
-  padding-left: 150px;
+  padding-left: 100px;
 }
 
 #header-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   padding-top: 10px;
-  width: 95%;
   margin: 0 auto;
   align-content: center;
 }
 
 #wrapper {
-  width: 95%;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 10 auto;
+}
+
+#error {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+#t2t {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+#commentTitle{
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+#instructions{
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1; 
+  grid-row-end: 2;
 }
 
 .text-blurb {
@@ -80,6 +106,7 @@ body {
   stroke: gray;
   border-radius: 8px;
   pointer-events: none;
+  font-size: 12px;
 }
 
 .infotip {
@@ -87,10 +114,10 @@ body {
   text-align: center;
   min-width: 50px;
   min-height: 28px;
-  padding: 5px;
-  background: lightgrey;
-  stroke: gray;
+  padding: 8px;
+  background: rgb(224, 224, 224);
   pointer-events: none;
+  border-radius: 12px;
 }
 
 .question {

@@ -14,6 +14,8 @@ class TimeToTemp {
   constructor(div, data) {
     //set up dimensions...
     this.data = data;
+    div.html("<h2>Time To Temp Results</h2>");
+
     this.svg = div
       .append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -80,7 +82,7 @@ class TimeToTemp {
     .on('mouseover', function(d){
       infotip.transition().duration(animate).style('opacity', 1);
       let string = "<h2>WTH am I looking at???</h2>\n  <img src= data/explainer.png width='525' height=525 />";
-      infotip.html(string).style("top", d3.event.pageY - 700 + 'px').style("left", d3.event.pageX - 550 + 'px');   
+      infotip.html(string).style("top", d3.event.pageY - 600 + 'px').style("left", d3.event.pageX - 560 + 'px');   
     })
     .on('mouseout', function(d){
       infotip.transition().duration(200).style('opacity', 0);
@@ -129,8 +131,8 @@ function removeToolTip() {
   d3.select(this)
     .style("stroke", (d) => color(d.config))
     .style("stroke-width", 0.8);
-  //d3.select("#comment").transition().duration(500).style("opacity", 0);
-  //d3.select("#codeUsed").transition().duration(500).style("opacity", 0);
+  d3.select("#comment").transition().duration(1000).style("opacity", 0);
+  d3.select("#codeUsed").transition().duration(1000).style("opacity", 0);
 }
 
 function addToolTip(d) {
