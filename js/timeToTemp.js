@@ -186,7 +186,7 @@ function addToolTip(d) {
       `<span class = c${d.config.split('.').join("")}>${d.config}` + 
       "</span>" +
       "<br/>" +
-      "Factory Code, Gooey: " +
+      "OTA1 Code, Gooey: " +
       `<span class = g${d.g_fw_2.split('.').join("")}>${d.g_fw_2}` + 
       "</span>" +
       " Kirby: " +
